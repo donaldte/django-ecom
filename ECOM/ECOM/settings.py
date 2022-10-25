@@ -6,7 +6,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-TEMPLATES_DIR = os.join.path(BASE_DIR, 'templates')
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 
 
@@ -105,7 +105,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/')
+]
 
 MEDIA_URL = '/media/'
 

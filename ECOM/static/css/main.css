@@ -1,0 +1,22 @@
+h2{
+    background-color: chartreuse;
+}
+
+
+#icon-panier{
+    width: 50px;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+#total-panier{
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    background-color: red;
+    width: 20px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 14px;
+   
+}

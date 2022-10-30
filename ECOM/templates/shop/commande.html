@@ -3,7 +3,92 @@
 {% load static %}
 
 {% block content %}
+<br>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element" id='form-wrapper'>
+            <form action="" id="form">
 
-<h2> Commande </h2>
+                <div id="user-info">
+                    <p>Informations Personnelles:</p>
+
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="name" placeholder="Nom..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="username" placeholder="Prénom..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="email" placeholder="Tel..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <input type="email" class="form-control" name="email" placeholder="Email..." required>
+                    </div>
+
+                </div>
+
+                <div id="shipping-info">
+                    <hr>
+                    <p>Informations d'Expédition:</p>
+
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="address" placeholder="address..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="city" placeholder="Ville..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="state" placeholder="Pays..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="zipcode" placeholder="Zip code..." required>
+                    </div>
+
+                </div>
+                
+                <hr>
+                <input id="form-button" class="btn w-100 btn-success btn-block" type="submit" value="Continuer">
+            </form>
+
+        </div>
+
+        <br>
+
+        <div class="box-element hidden" id="payment-info">
+            <small> Option Paypal </small>
+        </div>
+
+    </div>
+
+
+
+    <div class="col-lg-6">
+        <div class="box-element">
+
+            <a class="btn btn-outline-dark" href="{% url 'shop:panier' %}">&#x2190; Retour au panier </a>
+
+            <hr>
+            <h3>Recapitulatif de la commande</h3>
+            <hr>
+
+            <div class="panier-row">
+                <div style="flex:2"><img class="row-image" src="{% static 'images/cart-img.png' %}" alt=""></div>
+                <div style="flex:2">Produit 1</div>
+                <div style="flex:1">$100</div>
+                <div style="flex:1">2</div>
+            </div>
+
+            <h5>Articles: 2</h5>
+            <h5>Articles: $200</h5>
+            
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

@@ -12,8 +12,8 @@
             <br><br>
             <table class="table">
                 <tr>
-                    <th><h5>Articles: <strong>3</strong></h5></th>
-                    <th><h5>Total: <strong>$100</strong></h5></th>
+                    <th><h5>Articles: <strong>{{commande.get_panier_article}}</strong></h5></th>
+                    <th><h5>Total: <strong>${{commande.get_panier_total|floatformat:2}}</strong></h5></th>
                     <th>
                         <a style="float: right; margin:5px" href="{% url 'shop:commande' %}" class="btn btn-success">
                             Vérifier</a>
@@ -33,21 +33,24 @@
                 <div style="flex:1"><strong>Quantité</strong></div>
                 <div style="flex:1"><strong>Total</strong></div>
             </div>
-
+        {% for article in articles  %}
+          
             <div class="panier-row">
-                <div style="flex:2"><img class="row-image" src="{% static 'images/cart-img.png' %}" alt=""></div>
-                <div style="flex:2">Produit 1</div>
-                <div style="flex:1">$100</div>
+                <div style="flex:2"><img class="row-image" src="{{article.produit.imageUrl}}" alt=""></div>
+                <div style="flex:2"> {{article.produit.name}}</div>
+                <div style="flex:1">${{article.produit.price|floatformat:2}}</div>
                 <div style="flex:1">
-                    <p class="quantite">2</p>
+                    <p class="quantite">{{article.quantite}}</p>
                     <div class="quantite">
                         <img class="chg-quantite" src="{% static 'images/arrow-up.png' %}" alt="">
 
                         <img class="chg-quantite" src="{%  static 'images/arrow-down.png' %}" alt="">
                     </div>
                 </div>
-                <div style="flex:1">$200</div>
+                <div style="flex:1">${{article.get_total}}</div>
             </div>
+
+        {% endfor %}      
 
         </div>
 

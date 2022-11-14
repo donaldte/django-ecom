@@ -13,7 +13,8 @@
             <div class="box-element product">
                 <h6>{{produit.name}}</h6>
                 <hr>
-                <button class="btn btn-outline-secondary">Ajouter au panier</button>
+                <button class="btn btn-outline-secondary add-btn update-panier" data-produit={{produit.pk}} data-action="add">
+                Ajouter au panier</button>
                 <a class="btn btn-outline-success" href="#">Voir</a>
                 <h3 style="float: right;">${{produit.price|floatformat:2}}</h3>
             </div>

@@ -51,14 +51,24 @@ class Commande(models.Model):
     def __str__(self):
         return str(self.id)  
 
+    @property
+    def produit_physique(self):
+        """ savoir si nous avons au moins un produit physique"""
+        articlecommande = self.commandearticle_set.all()
+        physique = any(article.produit.digital==False for article in articlecommande)
+        return physique
+        
+
     @property 
     def get_panier_total(self):
+        """ prix total des articles dans le panier"""
         articlecommande = self.commandearticle_set.all()
         total = sum([article.get_total for article in articlecommande])
         return total  
 
     @property
     def get_panier_article(self):
+        """ Nombre total des articles dans le panier"""
         articlecommande = self.commandearticle_set.all()
         quantite_total = sum([article.quantite for article in articlecommande])
         return quantite_total

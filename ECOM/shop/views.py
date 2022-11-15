@@ -3,35 +3,14 @@ from .models import *
 from django.http import JsonResponse
 import json
 from datetime import datetime
+from .utile import commandeAnonyme, data_cookie, panier_cookie
 
 def shop(request, *args, **kwargs):
     """ vue principale """
 
     produits = Produit.objects.all()
-
-    if request.user.is_authenticated:
-
-        client = request.user.client
-
-        commande, created = Commande.objects.get_or_create(client=client, complete=False)
-
-        articles = commande.commandearticle_set.all()
-
-        nombre_article = commande.get_panier_article
-
-    else:
-
-        articles = []   
-
-        commande = {
-            'get_panier_total':0,
-            'get_panier_article':0
-        }
-
-        nombre_article = commande['get_panier_article']
-
-
-
+    data = data_cookie(request)
+    nombre_article = data['nombre_article']
 
     context = {
         'produits':produits,
@@ -44,28 +23,10 @@ def shop(request, *args, **kwargs):
 def panier(request, *args, **kwargs):
     """ panier """
     
-    if request.user.is_authenticated:
-
-        client = request.user.client
-
-        commande, created = Commande.objects.get_or_create(client=client, complete=False)
-
-        articles = commande.commandearticle_set.all()
-
-   
-        nombre_article = commande.get_panier_article
-
-    else:
-
-        articles = []   
-
-        commande = {
-            'get_panier_total':0,
-            'get_panier_article':0,
-            'shipping':False,
-        }
-
-        nombre_article = commande['get_panier_article']
+    data = data_cookie(request)
+    articles = data['articles']
+    commande = data['commande']
+    nombre_article = data['nombre_article']
 
     context = {
         'articles':articles,
@@ -79,28 +40,10 @@ def panier(request, *args, **kwargs):
 def commande(request, *args, **kwargs):
     """ Commande """
 
-    if request.user.is_authenticated:
-
-        client = request.user.client
-
-        commande, created = Commande.objects.get_or_create(client=client, complete=False)
-
-        articles = commande.commandearticle_set.all()
-
-   
-        nombre_article = commande.get_panier_article
-
-    else:
-
-        articles = []   
-
-        commande = {
-            'get_panier_total':0,
-            'get_panier_article':0,
-            'shipping':False,
-        }
-
-        nombre_article = commande['get_panier_article']
+    data = data_cookie(request)
+    articles = data['articles']
+    commande = data['commande']
+    nombre_article = data['nombre_article']
 
     context = {
         'articles':articles,
@@ -158,28 +101,30 @@ def traitementCommande(request, *args, **kwargs):
 
         commande, created = Commande.objects.get_or_create(client=client, complete=False)
 
-        total = float(data['form']['total'])
-
-        commande.transaction_id = transaction_id
-
-        if commande.get_panier_total == total:
-
-            commande.complete = True
-
-        commande.save()    
-
-        if commande.produit_physique:
-
-            AddressChipping.objects.create(
-                client=client,
-                commande=commande,
-                addresse = data['shipping']['address'],
-                ville=data['shipping']['city'],
-                zipcode=data['shipping']['zipcode']
-            )
-
 
     else:
-        print("utilisateur non authentifie")
+        client, commande = commandeAnonyme(request, data)
+
+    total = float(data['form']['total'])
+
+    commande.transaction_id = transaction_id
+
+    if commande.get_panier_total == total:
+
+        commande.complete = True
+
+    commande.save()    
+
+    if commande.produit_physique:
+
+        AddressChipping.objects.create(
+            client=client,
+            commande=commande,
+            addresse = data['shipping']['address'],
+            ville=data['shipping']['city'],
+            zipcode=data['shipping']['zipcode']
+        )
+
+
 
     return JsonResponse("Traitement complete!", safe=False)

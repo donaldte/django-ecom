@@ -158,11 +158,13 @@
             shippingUserInfo.zipcode = form.zipcode.value;
         }
 
-        if (user == "anonymousUser"){
+        if (user == "AnonymousUser"){
             userFormData.name = form.name.value;
             userFormData.username = form.username.value;
             userFormData.phone = form.phone.value;
             userFormData.email = form.email.value;
+
+            console.log(userFormData);
         }
 
         var url = '/traitement-commande/';
@@ -183,6 +185,8 @@
         .then((data) => {
             console.log('data', data);
             alert('traitement commande termine');
+            panier = {};
+            document.cookie = "panier=" + JSON.stringify(panier) + ";domain=;path=/";
             window.location.href = "{% url 'shop:shop' %}";
         })
     }

@@ -45,7 +45,7 @@ def panier_cookie(request):
             articles.append(article)
 
             if produit.digital == False:
-                commande['shipping'] = True
+                commande['produit_physique'] = True
                 
     except:
         pass 

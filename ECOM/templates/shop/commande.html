@@ -63,12 +63,12 @@
 
         <div class="box-element hidden" id="payment-info">
             <small>Veillez choissir le Mode de paiement</small> <br>
-            <input type="radio" name = ".." value="paypal"> Paypal<img class="row-image" 
-            src="{% static 'images/paypal.png' %}" alt="">
-            <input type="radio" name = ".." value="mobile"> Mobile Money 
-            <img class="row-image" src="{% static 'images/cinetpay.png' %}" alt="">
+        <center class="bg-info  my-3"> <button onclick="checkout()" class="btn btn-block" >
+            <img class="row-image" src="{% static 'images/cinet.png' %}" alt=""> </button> </center>
+            
+            <div id="paypal-button-container"></div>
 
-            <button class="btn w-100 btn-success btn-block" id="make-payment"> Effectuer le paiement </button>
+            
         </div>
 
     </div>
@@ -101,11 +101,88 @@
     </div>
 </div>
 
+ <!-- Include the PayPal JavaScript SDK -->
+ <script src="https://www.paypal.com/sdk/js?client-id=AZ0eZylbqLFaIEyWfH74MMFdCYRiR9PgIVKXjJiReDinExGn6ugJD1qFPge5bT_doUFj3Fu8Eil0DvPJ&currency=USD"></script>
+
+ <script>
+     var total = parseFloat('{{commande.get_panier_total}}').toFixed(2);
+     // Render the PayPal button into #paypal-button-container
+     paypal.Buttons({
+         
+         style:{
+            color: 'blue',
+            shape: 'rect',
+         },
+         // Set up the transaction
+         createOrder: function(data, actions) {
+             return actions.order.create({
+                 purchase_units: [{
+                     amount: {
+                         value: total
+                     }
+                 }]
+             });
+         },
+
+         // Finalize the transaction
+         onApprove: function(data, actions) {
+             return actions.order.capture().then(function(orderData) {
+                 // Successful capture! For demo purposes:
+                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                 var transaction = orderData.purchase_units[0].payments.captures[0];
+
+                 submitFormData(transaction.id, transaction.status);
+
+                 // Replace the above to show a success message within this page, e.g.
+                 // const element = document.getElementById('paypal-button-container');
+                 // element.innerHTML = '';
+                 // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                 // Or go to another URL:  actions.redirect('thank_you.html');
+             });
+         }
+
+
+     }).render('#paypal-button-container');
+ </script>
+ 
+ <script>
+    function checkout() {
+        CinetPay.setConfig({
+            apikey: '',//   YOUR APIKEY
+            site_id: '',//YOUR_SITE_ID
+            notify_url: 'http://mondomaine.com/notify/',
+            mode: 'PRODUCTION'
+        });
+        CinetPay.getCheckout({
+            transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
+            amount: 100,
+            currency: 'XOF',
+            channels: 'ALL',
+            description: 'Test de paiement',   
+
+        });
+        CinetPay.waitResponse(function(data) {
+            if (data.status == "REFUSED") {
+                if (alert("Votre paiement a échoué")) {
+                    window.location.reload();
+                }
+            } else if (data.status == "ACCEPTED") {
+                if (alert("Votre paiement a été effectué avec succès")) {
+                    window.location.reload();
+                }
+            }
+        });
+        CinetPay.onError(function(data) {
+            console.log(data);
+        });
+    }
+</script>
+
 <script type="text/javascript">
 
     var produitPhysique = '{{commande.produit_physique}}';
 
-    var total = parseInt('{{commande.get_panier_total}}');
+    var total = parseFloat('{{commande.get_panier_total}}').toFixed(2);
 
 
     if( produitPhysique === 'False'){
@@ -133,11 +210,16 @@
         document.getElementById('payment-info').classList.remove('hidden');
     })
 
-    document.getElementById('make-payment').addEventListener('click', function(e){
-        submitFormData();
-    })
+    // document.getElementById('make-payment').addEventListener('click', function(e){
+    //     submitFormData();
+    // })
 
-    function submitFormData(){
+    function submitFormData(transactionId, status){
+
+        var paymentInfo = {
+            'transaction_id': transactionId,
+            'status': status
+        }
         
         var userFormData = {
             'name':null,
@@ -178,7 +260,7 @@
                 "Content-Type": "application/json",
                 "X-CSRFToken": csrftoken
             },
-            body: JSON.stringify({"form": userFormData, "shipping": shippingUserInfo})
+            body: JSON.stringify({"form": userFormData, "shipping": shippingUserInfo, 'payment_info': paymentInfo})
         })
 
         .then((response) => {
@@ -187,7 +269,7 @@
 
         .then((data) => {
             console.log('data', data);
-            alert('traitement commande termine');
+            alert(data);
             panier = {};
             document.cookie = "panier=" + JSON.stringify(panier) + ";domain=;path=/";
             window.location.href = "{% url 'shop:shop' %}";

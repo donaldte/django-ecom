@@ -95,6 +95,8 @@ def traitementCommande(request, *args, **kwargs):
 
     data = json.loads(request.body)
 
+    print(data)
+
     if request.user.is_authenticated:
 
         client = request.user.client
@@ -107,11 +109,19 @@ def traitementCommande(request, *args, **kwargs):
 
     total = float(data['form']['total'])
 
-    commande.transaction_id = transaction_id
+    commande.transaction_id = data['payment_info']['transaction_id']
+
+    commande.total_trans = total
 
     if commande.get_panier_total == total:
 
         commande.complete = True
+        commande.status = data['payment_info']['status']
+
+    else:
+        commande.status = "REFUSED"
+
+        return JsonResponse("Attention!!! Traitement Refuse Fraude detecte!", safe=False)
 
     commande.save()    
 
@@ -127,4 +137,4 @@ def traitementCommande(request, *args, **kwargs):
 
 
 
-    return JsonResponse("Traitement complete!", safe=False)
+    return JsonResponse("Votre paiement a été effectué avec succès, vous recevrez votre commande dans un instant !", safe=False)

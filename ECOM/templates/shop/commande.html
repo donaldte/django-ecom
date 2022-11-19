@@ -8,6 +8,7 @@
     <div class="col-lg-5">
         <div class="box-element" id='form-wrapper'>
             <form action="" id="form">
+            {% csrf_token %}
 
                 <div id="user-info">
                     <p>Informations Personnelles:</p>
@@ -122,6 +123,8 @@
     }
 
     form = document.getElementById('form');
+    csrftoken = form.getElementsByTagName('input')[0].value
+    console.log('neauveau token', csrftoken);
 
     form.addEventListener('submit', function(e){
         e.preventDefault();

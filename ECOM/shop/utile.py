@@ -110,7 +110,6 @@ def commandeAnonyme(request, data):
     client.name = name
     client.save()
 
-    print('client', client)
 
     commande = Commande.objects.create(
         client=client

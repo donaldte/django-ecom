@@ -151,26 +151,21 @@
             apikey: '',//   YOUR APIKEY
             site_id: '',//YOUR_SITE_ID
             notify_url: 'http://mondomaine.com/notify/',
-            mode: 'PRODUCTION'
+            mode: 'TEST'
         });
         CinetPay.getCheckout({
             transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
-            amount: 100,
-            currency: 'XOF',
+            amount: total,
+            currency: 'XAF',
             channels: 'ALL',
             description: 'Test de paiement',   
 
         });
         CinetPay.waitResponse(function(data) {
-            if (data.status == "REFUSED") {
-                if (alert("Votre paiement a échoué")) {
-                    window.location.reload();
-                }
-            } else if (data.status == "ACCEPTED") {
-                if (alert("Votre paiement a été effectué avec succès")) {
-                    window.location.reload();
-                }
-            }
+          
+            submitFormData(data.operator_id, data.status);
+            $("#cp_modal_first_parent").hide();
+            
         });
         CinetPay.onError(function(data) {
             console.log(data);
@@ -269,10 +264,13 @@
 
         .then((data) => {
             console.log('data', data);
-            alert(data);
+            //alert(data);
+            $("#cp_modal_first_parent").hide();
+            Swal.fire({icon:'info',text:data}).then(result => {
+                window.location.href = "{% url 'shop:shop' %}";
+            });
             panier = {};
             document.cookie = "panier=" + JSON.stringify(panier) + ";domain=;path=/";
-            window.location.href = "{% url 'shop:shop' %}";
         })
     }
 </script>

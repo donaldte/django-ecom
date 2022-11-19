@@ -90,6 +90,8 @@ def update_article(request, *args, **kwargs):
 
 def traitementCommande(request, *args, **kwargs):
     """ traitement,  validation de la com;ande  et verification de l'integrite des donnees(detection de fraude)"""
+
+    STATUS_TRANSACTION = ['ACCEPTED', 'COMPLETED', 'SUCESS']
     
     transaction_id = datetime.now().timestamp()
 
@@ -120,10 +122,16 @@ def traitementCommande(request, *args, **kwargs):
 
     else:
         commande.status = "REFUSED"
-
+        commande.save()
+        
         return JsonResponse("Attention!!! Traitement Refuse Fraude detecte!", safe=False)
 
     commande.save()    
+    
+    if not commande.status in STATUS_TRANSACTION:
+        return JsonResponse("Désolé, le paiement a échoué, veuillez réessayer")    
+
+  
 
     if commande.produit_physique:
 

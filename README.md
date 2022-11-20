@@ -5,6 +5,11 @@ Application de ecommerce avec django plus integration des modes de paiement (`Pa
 
 `Python` version 3.9, `django` version 4.1.2
 
+# Structure 
+
+![Screenshot from![Screenshot from 2022-11-20 07-03-41](https://user-images.githubusercontent.com/81464575/202889068-90f62c2d-b3ac-4fe5-9d5c-2900a5cb7644.png)
+ 2022-11-20 06-19-27](https://user-images.githubusercontent.com/81464575/202889062-9c5f1ac0-342e-429f-b62b-25fd59c15404.png)
+
 # Page principal
 
 ![main](https://user-images.githubusercontent.com/81464575/200109393-04e3de68-1b31-43c9-af49-9d6fa18ca76e.png)
@@ -23,3 +28,12 @@ Application de ecommerce avec django plus integration des modes de paiement (`Pa
 
 # Paiement succes
 ![Screenshot from 2022-11-19 21-33-44](https://user-images.githubusercontent.com/81464575/202871029-79a4f97b-0852-4bb1-8226-19e518ea8b4e.png)
+
+# Table dans le Admin
+
+![Screenshot from 2022-11-20 03-58-17](https://user-images.githubusercontent.com/81464575/202888995-d964fa84-00e9-46a0-92dc-aaf70e85c920.png)
+![Screenshot from 2022-11-20 03-58-51](https://user-images.githubusercontent.com/81464575/202889006-947d79f1-95f8-496a-9a3c-2fc472de755d.png)
+![Screenshot from 2022-11-20 04-00-19](https://user-images.githubusercontent.com/81464575/202889009-e6cf2c3f-f1aa-4b47-bb62-85569db19343.png)
+![Screenshot from 2022-11-20 04-00-55](https://user-images.githubusercontent.com/81464575/202889013-a7e34c81-a4e6-4394-a454-308d658ab437.png)
+![Screenshot from 2022-11-20 04-01-28](https://user-images.githubusercontent.com/81464575/202889021-ee003cc3-77b7-4335-a88a-ecaa339a25f0.png)
+![Screenshot from 2022-11-20 04-15-14](https://user-images.githubusercontent.com/81464575/202889039-8ec6cf7d-e205-45d1-849f-f9abe0cfd290.png)

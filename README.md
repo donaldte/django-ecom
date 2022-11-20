@@ -8,7 +8,7 @@ Application de ecommerce avec django plus integration des modes de paiement (`Pa
 # Structure 
 
 ![Screenshot from![Screenshot from 2022-11-20 07-03-41](https://user-images.githubusercontent.com/81464575/202889068-90f62c2d-b3ac-4fe5-9d5c-2900a5cb7644.png)
- 2022-11-20 06-19-27](https://user-images.githubusercontent.com/81464575/202889062-9c5f1ac0-342e-429f-b62b-25fd59c15404.png)
+![Screenshot from 2022-11-20 07-03-41](https://user-images.githubusercontent.com/81464575/202889099-1c0ddd0e-b0ca-4a82-a393-fb19f0093175.png)
 
 # Page principal
 

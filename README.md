@@ -1,5 +1,5 @@
 # django-ecom
-Application de ecommerce avec django plus integration des modes de paiement (`Paypal`, `credit card` `Orange Money`, `MTN Mobile`, `Moove money` etc) 
+Application de ecommerce avec django avec integration des API de paiement (`Paypal`, `credit card` `Orange Money`, `MTN Mobile`, `Moove money` etc) 
 
 Vous pourriez aller plus loin avec ce projet.
 # tech

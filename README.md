@@ -40,6 +40,7 @@ Vous pourriez aller plus loin avec ce projet.
 ![Screenshot from 2022-11-20 04-00-19](https://user-images.githubusercontent.com/81464575/202889009-e6cf2c3f-f1aa-4b47-bb62-85569db19343.png)
 ![Screenshot from 2022-11-20 04-00-55](https://user-images.githubusercontent.com/81464575/202889013-a7e34c81-a4e6-4394-a454-308d658ab437.png)
 ![Screenshot from 2022-11-20 04-01-28](https://user-images.githubusercontent.com/81464575/202889021-ee003cc3-77b7-4335-a88a-ecaa339a25f0.png)
+![Screenshot from 2022-11-20 04-15-14](https://user-images.githubusercontent.com/81464575/202889039-8ec6cf7d-e205-45d1-849f-f9abe0cfd290.png)
 
 
 # django-ecom
@@ -93,4 +94,3 @@ Install requirements
 pip install -r requirements.txt
 ```
 
-![Screenshot from 2022-11-20 04-15-14](https://user-images.githubusercontent.com/81464575/202889039-8ec6cf7d-e205-45d1-849f-f9abe0cfd290.png)
